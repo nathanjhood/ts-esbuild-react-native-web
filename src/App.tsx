@@ -6,6 +6,7 @@ import {
   Pressable,
   useWindowDimensions,
 } from 'react-native';
+import './App.css';
 
 export default function App() {
   const {height} = useWindowDimensions();
