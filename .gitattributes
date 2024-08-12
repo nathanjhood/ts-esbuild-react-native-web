@@ -1,0 +1,21 @@
+# This sets the default behaviour, overriding core.autocrlf
+* text=auto eol=lf
+
+LICENSE eol=lf
+VERSION eol=lf
+
+*.{md} text
+*.{json,js,jsx,ts,tsx} text
+
+*.{sln,[sS][lL][nN]} eol=crlf
+*.{cmd,[cC][mM][dD]} eol=crlf
+*.{bat,[bB][aA][tT]} eol=crlf
+*.{ps1,psm1} eol=crlf
+
+*.{bin} binary
+*.{pfx} binary
+
+*.{png} binary
+*.{jpg} binary
+*.{ico} binary
+*.{bmp} binary
