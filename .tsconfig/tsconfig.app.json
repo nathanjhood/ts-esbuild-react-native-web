@@ -5,6 +5,7 @@
       // "types": [
       //   "react",
       //   "react-dom"
+      //   "react-native-web"
       // ],
       "lib": [
         "ES2020",
@@ -30,7 +31,7 @@
       "outDir": "../dist",
       "paths": {
         "@/*": ["../src/*"],
-        "react-native": ["node_modules/react-native-web"]
+        // "react-native": ["node_modules/react-native-web"]
       },
     },
     "include": [

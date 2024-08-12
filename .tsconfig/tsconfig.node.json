@@ -31,7 +31,6 @@
       "../index.d.ts",
       "../env.d.ts",
       "../esbuild.config.ts",
-      "../tailwind.config.ts",
       "../scripts"
     ]
   }
