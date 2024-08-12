@@ -1,6 +1,8 @@
 # ts-esbuild-react-native-web
 
-A React-Native for Web starter project template, powered by [esbuild](https://esbuild.github.io/) with Typescript support and a hot-reloading dev server.
+Use React Native components in your web application.
+
+A [React-Native-Web](https://necolas.github.io/react-native-web/) - *for* web - starter project template, powered by [esbuild](https://esbuild.github.io/) with Typescript support and a hot-reloading dev server.
 
 [![Node](https://github.com/nathanjhood/ts-esbuild-react/actions/workflows/node.yaml/badge.svg)](https://github.com/nathanjhood/ts-esbuild-react/actions/workflows/node.yml)
 
@@ -92,6 +94,8 @@ Or, take inspiration from it for your own projects.
 
 ## Further Reading
 
-- https://www.typescriptlang.org/docs/handbook/jsx.html#basic-usage
-- https://eisenbergeffect.medium.com/an-esbuild-setup-for-typescript-3b24852479fe
-- https://gist.github.com/Med-H/5f2e2084309cb75134aa0a106c78e214
+- [https://necolas.github.io/react-native-web/](https://necolas.github.io/react-native-web/)
+- [https://blog.logrocket.com/complete-guide-react-native-web/](https://blog.logrocket.com/complete-guide-react-native-web/)
+- [https://www.typescriptlang.org/docs/handbook/jsx.html#basic-usage](https://www.typescriptlang.org/docs/handbook/jsx.html#basic-usage)
+- [https://eisenbergeffect.medium.com/an-esbuild-setup-for-typescript-3b24852479fe](https://eisenbergeffect.medium.com/an-esbuild-setup-for-typescript-3b24852479fe)
+- [https://gist.github.com/Med-H/5f2e2084309cb75134aa0a106c78e214](https://gist.github.com/Med-H/5f2e2084309cb75134aa0a106c78e214)
