@@ -3,6 +3,7 @@
 import * as esbuild from 'esbuild';
 import fs from 'node:fs';
 import { createBuildOptions } from '../esbuild.config.mjs';
+import process from 'process';
 
 const options = createBuildOptions({ minify: true, metafile: true });
 const build = await esbuild.build(options);
