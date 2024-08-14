@@ -1,12 +1,38 @@
 {
-    "files": [],
-    "references": [
-      {
-        "path": "./.tsconfig/tsconfig.app.json"
-      },
-      {
-        "path": "./.tsconfig/tsconfig.node.json"
-      }
-    ]
-  }
-  
+  "files": [],
+  "ts-node": {
+    "transpileOnly": false,
+    "files": true,
+    "moduleTypes": {
+      "esbuild.config.ts": "cjs",
+      // Globs are also supported with the same behavior as tsconfig "include"
+      // ".esbuild/**/*.ts": "cjs"
+    },
+    "require": [
+      "tsconfig-paths/register"
+    ],
+    "ignore": [
+      "(?:^|/)node_modules/"
+    ],
+    "compilerOptions": {
+      "types": [
+        "node"
+      ],
+      "esModuleInterop": true,
+      // compilerOptions specified here will override those declared below,
+      // but *only* in ts-node.  Useful if you want ts-node and tsc to use
+      // different options with a single tsconfig.json.
+    }
+  },
+  "references": [
+    {
+      "path": "./.tsconfig/tsconfig.app.json"
+    },
+    {
+      "path": "./.tsconfig/tsconfig.node.json"
+    }
+  ],
+  "exclude": [
+    "(?:^|/)node_modules/"
+  ]
+}
