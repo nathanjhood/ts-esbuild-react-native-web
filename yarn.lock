@@ -3871,12 +3871,12 @@ flow-parser@0.*:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.243.0.tgz#4a55047035a4fa0fa7215348b9d7b4ea276abb04"
   integrity sha512-HCDBfH+kZcY5etWYeAqatjW78gkIryzb9XixRsA8lGI1uyYc7aCpElkkO4H+KIpoyQMiY0VAZPI4cyac3wQe8w==
 
-flow-remove-types@^2.243.0:
-  version "2.243.0"
-  resolved "https://registry.yarnpkg.com/flow-remove-types/-/flow-remove-types-2.243.0.tgz#1b225d05205878f4ebc878a5b89a5f071945aaf6"
-  integrity sha512-Fb92BiRnNc02bTmZ+FBqRw24fD1fi/osHFI5OpHSkqANttEC4OkEbCq+4fwkhDH1foF2OlenNS0uRJkAWrcnZw==
+flow-remove-types@^2.244.0:
+  version "2.244.0"
+  resolved "https://registry.yarnpkg.com/flow-remove-types/-/flow-remove-types-2.244.0.tgz#d6c130f20a2c2c7b91cd5d4e50eb4d3befdf6811"
+  integrity sha512-5WD9PR9d9sjoaYCQGZngd6EPRacNDc0CKXkM5JsLnLeTT26TX2CPoPHTcb+fuRtE9l4m0IUNTlVrS42BE4yqpg==
   dependencies:
-    hermes-parser "0.23.0"
+    hermes-parser "0.23.1"
     pirates "^3.0.2"
     vlq "^0.2.1"
 
@@ -4119,6 +4119,11 @@ hermes-estree@0.23.0:
   resolved "https://registry.yarnpkg.com/hermes-estree/-/hermes-estree-0.23.0.tgz#89c5419877b9d6bce4bb616821f496f5c5daddbc"
   integrity sha512-Rkp0PNLGpORw4ktsttkVbpYJbrYKS3hAnkxu8D9nvQi6LvSbuPa+tYw/t2u3Gjc35lYd/k95YkjqyTcN4zspag==
 
+hermes-estree@0.23.1:
+  version "0.23.1"
+  resolved "https://registry.yarnpkg.com/hermes-estree/-/hermes-estree-0.23.1.tgz#d0bac369a030188120ee7024926aabe5a9f84fdb"
+  integrity sha512-eT5MU3f5aVhTqsfIReZ6n41X5sYn4IdQL0nvz6yO+MMlPxw49aSARHLg/MSehQftyjnrE8X6bYregzSumqc6cg==
+
 hermes-parser@0.19.1:
   version "0.19.1"
   resolved "https://registry.yarnpkg.com/hermes-parser/-/hermes-parser-0.19.1.tgz#1044348097165b7c93dc198a80b04ed5130d6b1a"
@@ -4132,6 +4137,13 @@ hermes-parser@0.23.0:
   integrity sha512-xLwM4ylfHGwrm+2qXfO1JT/fnqEDGSnpS/9hQ4VLtqTexSviu2ZpBgz07U8jVtndq67qdb/ps0qvaWDZ3fkTyg==
   dependencies:
     hermes-estree "0.23.0"
+
+hermes-parser@0.23.1:
+  version "0.23.1"
+  resolved "https://registry.yarnpkg.com/hermes-parser/-/hermes-parser-0.23.1.tgz#e5de648e664f3b3d84d01b48fc7ab164f4b68205"
+  integrity sha512-oxl5h2DkFW83hT4DAUJorpah8ou4yvmweUzLJmmr6YV2cezduCdlil1AvU/a/xSsAFo4WUcNA4GoV5Bvq6JffA==
+  dependencies:
+    hermes-estree "0.23.1"
 
 hermes-profile-transformer@^0.0.6:
   version "0.0.6"
