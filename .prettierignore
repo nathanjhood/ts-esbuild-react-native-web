@@ -1,5 +1,7 @@
 # Ignore artifacts:
 dist
-out
 build
 coverage
+.bak
+.tmp
+node_modules

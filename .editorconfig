@@ -1,11 +1,18 @@
-# Stop the editor from looking for .editorconfig files in the parent directories
+  # Stop the editor from looking for .editorconfig files in the parent directories
 root = true
+
+# NOTE - 'end_of_line' settings should always match with the settings in
+# '.gitattributes', keeping the IDE's and git's parsers in sync.
+# The main caveat is that certain Windows-based file extensions *must* be crlf,
+# which are '*.sln', '*.cmd', and '*.bat', aside from any Powershell files
+# ('*.ps1...'), and everything else can be safely managed with lf EOL's.
 
 [*]
 # Non-configurable Prettier behaviors
 charset = utf-8
 insert_final_newline = true
-# Caveat: Prettier won’t trim trailing whitespace inside template strings, but your editor might.
+# Caveat: Prettier won’t trim trailing whitespace inside template strings,
+# but your editor might.
 trim_trailing_whitespace = true
 
 # Configurable Prettier behaviors
@@ -15,29 +22,7 @@ indent_style = space
 indent_size = 2
 max_line_length = 80
 
-[*.{yml,yaml}]
-indent_style = space
-indent_size = 2
-
-[*.{md,rmd,mkd,mkdn,mdwn,mdown,markdown,litcoffee}]
-indent_style = space
-trim_trailing_whitespace = false
-
-[*.html]
-indent_style = space
-indent_size = 2
-
-[*.css]
-indent_size = 2
-
-[*.{js,mjs,cjs,jsx,ts,mjs,cjs,tsx}]
-indent_style = space
-indent_size = 2
-
-[*.json]
-indent_size = 2
-
-# Windows specific files should retain windows line-endings
+# Windows specific files should retain windows line-endings - see above...
 [*.{sln,[sS][lL][nN]}]
 end_of_line = crlf
 [*.{cmd,[cC][mM][dD]}]
@@ -46,3 +31,25 @@ end_of_line = crlf
 end_of_line = crlf
 [*.{ps1,psm1}]
 end_of_line = crlf
+
+# strict YAML
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# strict Markdown
+[*.{md,rmd,mkd,mkdn,mdwn,mdown,markdown,litcoffee}]
+indent_style = space
+trim_trailing_whitespace = false
+
+[*.html]
+indent_size = 2
+
+[*.css]
+indent_size = 2
+
+[*.{js,mjs,cjs,jsx,ts,mjs,cjs,tsx}]
+indent_size = 2
+
+[*.json]
+indent_size = 2
