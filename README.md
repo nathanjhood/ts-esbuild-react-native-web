@@ -9,7 +9,11 @@ A [React-Native-Web](https://necolas.github.io/react-native-web/) - *for* web - 
 [![Build and Deploy static content to Pages](https://github.com/nathanjhood/ts-esbuild-react/actions/workflows/static.yml/badge.svg)](https://github.com/nathanjhood/ts-esbuild-react/actions/workflows/static.yml)
 
 ## Contents
+
 - [Quickstart](#quickstart)
+  - [Develop](#develop)
+  - [Test](#test)
+  - [Deploy](#deploy)
 - [About](#about)
   - [Commands](#commands)
   - [Motivations](#motivations)
@@ -19,19 +23,35 @@ A [React-Native-Web](https://necolas.github.io/react-native-web/) - *for* web - 
 
 ## Quickstart
 
-Install dependencies (React, React-Native-Web, esbuild, typescript, etc...)
+### Develop
+
+Install required dependencies (React, esbuild, typescript, etc...)
 
 ```sh
 yarn
 ```
 
-Start a local dev server and open [http://localhost:5500](http://localhost:5500) in your browser:
+Start esbuild's local development server with hot-reloading and typescript support:
 
 ```sh
-yarn dev
+yarn start
 ```
 
-Edit ``src/App.tsx` and build your app. The page will refresh when you save any changes to your source files.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Edit `src/App.tsx` - the page in the browser will refresh when you save any changes to your source files in your IDE.
+
+---
+
+### Test
+
+```sh
+yarn test
+```
+
+---
+
+### Deploy
 
 To create a built application for deployment:
 
@@ -42,12 +62,9 @@ yarn build
 Optionally, preview the built application before deploying:
 
 ```sh
-yarn preview
+yarn serve -s build
 ```
 
-*Jest support for unit tests will be added at some point, using the standard React template.
-
----
 
 ## About
 
@@ -61,20 +78,14 @@ The usual `react-scripts`'s Webpack implementation has been replaced with a simi
 
 ```json
 {
-  // develop, build, analyze...
-  "dev": "node ./scripts/esbuild.serve.mjs",
-  "build": "node ./scripts/esbuild.build.mjs",
-  "analyze": "node ./scripts/esbuild.analyze.mjs",
-  "preview": "npx -y serve -l 5000 dist",
-
-  // test...
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "test:unit": "jest",
-
-  // lint, format...
-  "lint": "eslint .",
-  "lint:fix": "eslint . --fix",
-  "format": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.cjs"
+    "start": "tsx ./scripts/start.ts",
+    "test": "tsx ./scripts/test.ts",
+    "build": "tsx ./scripts/build.ts",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.mjs",
+    "format:fix": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.mjs"
 }
 ```
 
