@@ -1,16 +1,23 @@
 # This sets the default behaviour, overriding core.autocrlf
 * text=auto eol=lf
 
-LICENSE eol=lf
-VERSION eol=lf
+# NOTE - 'end_of_line' settings should always match with the settings in
+# '.editorconfig', keeping the IDE's and git's parsers in sync.
+# The main caveat is that certain Windows-based file extensions *must* be crlf,
+# which are '*.sln', '*.cmd', and '*.bat', aside from any Powershell files
+# ('*.ps1...'), and everything else can be safely managed with lf EOL's.
 
-*.{md} text
-*.{json,js,jsx,ts,tsx} text
-
+# Windows specific files should retain windows line-endings - see above...
 *.{sln,[sS][lL][nN]} eol=crlf
 *.{cmd,[cC][mM][dD]} eol=crlf
 *.{bat,[bB][aA][tT]} eol=crlf
 *.{ps1,psm1} eol=crlf
+
+LICENSE eol=lf
+VERSION eol=lf
+
+# *.{md} text
+# *.{json,js,jsx,ts,tsx} text
 
 *.{bin} binary
 *.{pfx} binary

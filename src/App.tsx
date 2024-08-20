@@ -10,7 +10,7 @@ import {
   Easing
 } from 'react-native';
 // import * as css from './App.css';
-// import logo from './logo192.png'
+import logo from './logo.svg'
 export const App = () => {
 
   const {height} = useWindowDimensions();
@@ -23,29 +23,29 @@ export const App = () => {
   // )
 
 
-  const spinValue = new Animated.Value(0);
+  // const spinValue = new Animated.Value(0);
 
-  // First set up animation
-  Animated.timing(
-      spinValue,
-    {
-      toValue: 1,
-      duration: 3000,
-      easing: Easing.linear, // Easing is an additional import from react-native
-      useNativeDriver: false // true  // To make use of native driver for performance
-    }
-  ).start()
+  // // First set up animation
+  // Animated.timing(
+  //     spinValue,
+  //   {
+  //     toValue: 1,
+  //     duration: 3000,
+  //     easing: Easing.linear, // Easing is an additional import from react-native
+  //     useNativeDriver: false // true  // To make use of native driver for performance
+  //   }
+  // ).start()
 
-  // Next, interpolate beginning and end values (in this case 0 and 1)
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg']
-  })
+  // // Next, interpolate beginning and end values (in this case 0 and 1)
+  // const spin = spinValue.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: ['0deg', '360deg']
+  // })
 
   return (
     <View style={[styles.app, { height }, StyleSheet.absoluteFill]}>
       <header style={styles.appHeader}>
-        {/* <Image width={192} height={192} id="appLogo" source={logo} alt="logo" /> */}
+        <img width={192} height={192} id="appLogo" src={logo} alt="logo" style={styles.appLogo} />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
