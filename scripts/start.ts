@@ -133,11 +133,12 @@ checkBrowsers(paths.appPath, isInteractive)
     esbuild
       .context({
         sourcemap: true,
+        format: "esm",
         banner: {
           // NODE - Append Hot reload event listener to DOM
-          js: `new EventSource('/esbuild').addEventListener('change', () => location.reload());`,
+          // js: `new EventSource('/esbuild').addEventListener('change', () => location.reload());`,
           // // BROSWER - Append Hot reload event listener to DOM
-          //js: '(() => new EventSource("/esbuild").onmessage = () => location.reload())();',
+          js: `(() => new EventSource("/esbuild").onmessage = () => location.reload())();`,
         },
         ...config,
       })
@@ -222,66 +223,6 @@ checkBrowsers(paths.appPath, isInteractive)
             });
         });
       });
-    // const watch = await ctx.watch();
-    // const served = await ctx
-    //   .serve({
-    //     port: port, //3000,
-    //     host: HOST, //"127.0.0.1",
-    //     servedir: paths.appBuild,
-    //     fallback: paths.appBuild + "/index.html",
-    //   })
-    //   .then(() => {
-    //     if (isInteractive) {
-    //       clearConsole();
-    //     }
-
-    //     if (env.raw.FAST_REFRESH && semver.lt(react.version, "16.10.0")) {
-    //       console.log(
-    //         chalk.yellow(
-    //           `Fast Refresh requires React 16.10 or higher. You are using React ${react.version}.`
-    //         )
-    //       );
-    //     }
-
-    //     console.log(chalk.cyan("Starting the development server...\n"));
-    //     openBrowser(urls.localUrlForBrowser);
-    //     console.info(`Serving app at ${protocol}://${HOST}:${port}.`);
-
-    //     // Whenever we get some data over stdin
-    //     ["data"].forEach(function (ev) {
-    //       process.stdin.on(ev, () => {
-    //         try {
-    //           // Cancel the already-running build
-    //           ctx.cancel();
-    //           // Then start a new build
-    //           console.info("build:", ctx.rebuild());
-    //         } catch (err) {
-    //           console.error(err);
-    //         }
-    //       });
-    //     });
-    //   });
-
-    // ["SIGINT", "SIGTERM"].forEach(function (sig) {
-    //   process.on(sig, async function () {
-    //     console.log();
-    //     console.log(`recieved ${sig}: shutting down gracefully...`);
-    //     await ctx.cancel();
-    //     await ctx.dispose();
-    //     process.exit();
-    //   });
-    // });
-
-    // if (process.env.CI !== "true") {
-    //   // Gracefully exit when stdin ends
-    //   process.stdin.on("end", async function () {
-    //     console.log();
-    //     console.log(`shutting down gracefully...`);
-    //     await ctx.cancel();
-    //     await ctx.dispose();
-    //     process.exit();
-    //   });
-    // }
   })
   .catch((err) => {
     if (err && err.message) {
