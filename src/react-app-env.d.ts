@@ -5,7 +5,7 @@
 
 declare namespace NodeJS {
   interface ProcessEnv {
-    readonly NODE_ENV: "development" | "production" | "test";
+    NODE_ENV: "development" | "production" | "test";
     readonly PUBLIC_URL: string;
   }
 }
@@ -56,54 +56,32 @@ declare module "*.svg" {
   export default src;
 }
 
+// Create types for CSS modules
 declare module "*.module.css" {
-  const classes: { readonly [key: string]: string };
-  export default classes;
-}
+  /** **Experimental:** Import styles that can be used with `react-native-web` components, using the `style` prop. */
+  export const unstable_styles: { readonly [key: string]: object };
 
-declare module "*.module.scss" {
   const classes: { readonly [key: string]: string };
   export default classes;
 }
 
 declare module "*.module.sass" {
+  /** **Experimental:** Import styles that can be used with `react-native-web` components, using the `style` prop. */
+  export const unstable_styles: { readonly [key: string]: object };
+
   const classes: { readonly [key: string]: string };
   export default classes;
 }
 
-// declare module "env" {
-//   const env: { readonly [key: string]: string } = process.env;
-//   export default env;
-// }
+declare module "*.module.scss" {
+  /** **Experimental:** Import styles that can be used with `react-native-web` components, using the `style` prop. */
+  export const unstable_styles: { readonly [key: string]: object };
 
-// declare type ReactEnvironmentNames = "production" | "development" | "test";
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
 
-// declare type ReactEnvironmentValues = {
-//   readonly NODE_ENV: string;
-//   readonly PUBLIC_URL: string;
-//   readonly PORT: string;
-//   readonly HOST: string;
-//   readonly HTTPS: string;
-// };
-
-// declare type ReactEnvironment = Record<
-//   ReactEnvironmentNames,
-//   ReactEnvironmentValues
-// >;
-
-// declare type ReactEnvironmentConstructor = {
-//   new (options?: ReactEnvironment): ReactEnvironment;
-//   (options?: ReactEnvironment): ReactEnvironment;
-//   readonly protoype: ReactEnvironment;
-// };
-
-// // eslint-disable-next-line no-var
-// declare var ReactEnvironment: ReactEnvironmentConstructor;
-
-// /**
-//  *
-//  */
-
-// declare module 'react-native' {
-//     export {default} from 'react-native-web'
-// }
+// Allow for css imports, but don't export anything
+declare module "*.css";
+declare module "*.sass";
+declare module "*.scss";
