@@ -5,15 +5,25 @@ import {
   View,
   Pressable,
   useWindowDimensions,
+  useColorScheme,
   Image,
   Animated,
-  Easing
+  Easing,
+  type ImageStyle,
+  type TextStyle,
+  type ViewStyle
 } from 'react-native';
-// import * as css from './App.css';
+// import from './App.css';
 import logo from './logo.svg'
-export const App = () => {
 
-  const {height} = useWindowDimensions();
+export const App: ({ body, code, p }: {
+    body: ViewStyle;
+    code: TextStyle;
+    p: TextStyle;
+}) => JSX.Element = ({ body, code, p }) => {
+
+  const { width, height, scale, fontScale } = useWindowDimensions();
+  const colorScheme = useColorScheme();
 
   // return (
   //   <View style={[styles.app, { height }, StyleSheet.absoluteFill]}>
@@ -23,41 +33,50 @@ export const App = () => {
   // )
 
 
-  // const spinValue = new Animated.Value(0);
+  const spinValue = new Animated.Value(0);
 
-  // // First set up animation
-  // Animated.timing(
-  //     spinValue,
-  //   {
-  //     toValue: 1,
-  //     duration: 3000,
-  //     easing: Easing.linear, // Easing is an additional import from react-native
-  //     useNativeDriver: false // true  // To make use of native driver for performance
-  //   }
-  // ).start()
+  // First set up animation
+  Animated.loop(
+    Animated.timing(
+      spinValue,
+      {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.linear, // Easing is an additional import from react-native
+        useNativeDriver: false // true  // To make use of native driver for performance
+      }
+    )
+  ).start()
 
-  // // Next, interpolate beginning and end values (in this case 0 and 1)
-  // const spin = spinValue.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: ['0deg', '360deg']
-  // })
+  // Next, interpolate beginning and end values (in this case 0 and 1)
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg']
+  })
 
   return (
-    <View style={[styles.app, { height }, StyleSheet.absoluteFill]}>
-      <header style={styles.appHeader}>
-        <img width={192} height={192} id="appLogo" src={logo} alt="logo" style={styles.appLogo} />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+    <View style={[body, styles.app, { height }, StyleSheet.absoluteFill]}>
+      <View style={styles.appHeader}>
+        <Animated.Image
+          style={{ transform: [{ rotate: spin }] }}
+          source={{
+            uri: "data:image/svg+xml;base64," + logo,
+            width: styles.appLogo.width ? parseInt(styles.appLogo.width.toString()) : 500,
+            height: styles.appLogo.height ? parseInt(styles.appLogo.height.toString()) : 500
+          }}
+        />
+        <Text style={p}>
+          Edit <Text style={code}>src/App.tsx</Text> and save to reload.
+        </Text>
         <a
           className="App-link"
-          href="https://github.com/nathanjhood/ts-esbuild-react"
+          href="https://github.com/nathanjhood/ts-esbuild-react-native-web"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by esbuild with Typescript
+          <Text style={p}>Powered by esbuild with Typescript</Text>
         </a>
-      </header>
+      </View>
     </View>
   )
 
@@ -67,7 +86,11 @@ export default App
 
 
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create<{
+  app: ViewStyle,
+  appHeader: ViewStyle,
+  appLogo: ImageStyle
+}>({
   app: {
     textAlign: 'center'
   },
@@ -83,53 +106,9 @@ const styles = StyleSheet.create({
     fontSize: '10px + 2vmin'
   },
   appLogo: {
-    height: '40vmin',
+    width: 500,
+    height: 500,
     pointerEvents: 'none'
   },
 
 })
-
-// export default function App() {
-//   const {height} = useWindowDimensions();
-//   const [number, setNumber] = useState(0);
-
-//   function handlePress() {
-//     setNumber(parseInt((Math.random() * 10000).toString(), 10) % 100);
-//   }
-
-//   return (
-//     <View style={[styles.container, {height}, StyleSheet.absoluteFill]}>
-//       <Text>Random Number: {number}</Text>
-//       <View style={styles.br} />
-//       <Pressable
-//         style={({pressed}) => [
-//           {
-//             opacity: pressed ? 0.7 : 1,
-//           },
-//           styles.btn,
-//         ]}
-//         onPress={handlePress}>
-//         <Text style={styles.btnText}>Generate a number</Text>
-//       </Pressable>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   br: {
-//     height: 12,
-//   },
-//   btn: {
-//     backgroundColor: '#222',
-//     padding: 10,
-//   },
-//   btnText: {
-//     color: '#fff',
-//   },
-// });
