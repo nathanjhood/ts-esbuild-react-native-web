@@ -66,14 +66,14 @@ checkBrowsers(paths.appPath, isInteractive)
     // This lets us display how much they changed later.
     return measureFileSizesBeforeBuild(paths.appBuild);
   })
-  .then((previousFileSizes) => {
-    // // Remove all content but keep the directory so that
-    // // if you're in it, you don't end up in Trash
-    // fs.emptyDirSync(paths.appBuild);
-    // // Merge with the public folder
-    // copyPublicFolder();
+  .then(async (previousFileSizes) => {
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
+    // Merge with the public folder
+    copyPublicFolder();
     // Start the esbuild build
-    return build(previousFileSizes).then(
+    return await build(previousFileSizes).then(
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       ({ metafile, previousFileSizes, warnings }) => {
         if (warnings.length) {

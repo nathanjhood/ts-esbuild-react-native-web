@@ -173,7 +173,7 @@ export function configFactory(
         assets: {
           from: [`${paths.appPublic}/**/*`],
           to: [paths.appBuild],
-          watch: true,
+          // watch: true,
           // keepStructure: true
         },
         verbose: false,
