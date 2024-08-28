@@ -176,7 +176,7 @@ export function configFactory(
           watch: true,
           // keepStructure: true
         },
-        verbose: true,
+        verbose: false,
         once: false,
         globbyOptions: {},
       }),

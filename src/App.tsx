@@ -16,37 +16,25 @@ import {
 // import from './App.css';
 import logo from './logo.svg'
 
-export const App: ({ body, code, p }: {
-    body: ViewStyle;
-    code: TextStyle;
-    p: TextStyle;
-}) => JSX.Element = ({ body, code, p }) => {
+export const App: (props: React.PropsWithChildren) => JSX.Element = (props) => {
 
   const { width, height, scale, fontScale } = useWindowDimensions();
   const colorScheme = useColorScheme();
 
-  // return (
-  //   <View style={[styles.app, { height }, StyleSheet.absoluteFill]}>
-  //     <header></header>
-  //     <Text>Edit <code>src/App.tsx</code> and save to reload.</Text>
-  //   </View>
-  // )
-
-
   const spinValue = new Animated.Value(0);
 
-  // First set up animation
-  Animated.loop(
-    Animated.timing(
+  const spinTiming = Animated.timing(
       spinValue,
       {
         toValue: 1,
-        duration: 3000,
+        duration: 20000, // 20 seconds
         easing: Easing.linear, // Easing is an additional import from react-native
         useNativeDriver: false // true  // To make use of native driver for performance
       }
     )
-  ).start()
+
+  // First set up animation
+  const animation = Animated.loop(spinTiming)
 
   // Next, interpolate beginning and end values (in this case 0 and 1)
   const spin = spinValue.interpolate({
@@ -55,46 +43,48 @@ export const App: ({ body, code, p }: {
   })
 
   return (
-    <View style={[body, styles.app, { height }, StyleSheet.absoluteFill]}>
-      <View style={styles.appHeader}>
+    <View style={[styles.app, { height: height }, StyleSheet.absoluteFill]}>
+      <View style={styles.header}>
         <Animated.Image
-          style={{ transform: [{ rotate: spin }] }}
-          source={{
-            uri: "data:image/svg+xml;base64," + logo,
-            width: styles.appLogo.width ? parseInt(styles.appLogo.width.toString()) : 500,
-            height: styles.appLogo.height ? parseInt(styles.appLogo.height.toString()) : 500
-          }}
+          style={[styles.logo, { transform: [{ rotate: spin }] }]}
+          source={{ uri: "data:image/svg+xml;base64," + logo }}
+          onLoadStart={() => { animation.reset(); return console.info("Loading image..."); }}
+          onLoadEnd={() => { animation.start(); return console.info("Loaded image..."); }}
+          onError={(error) => { animation.stop(); return console.error(error); }}
         />
-        <Text style={p}>
-          Edit <Text style={code}>src/App.tsx</Text> and save to reload.
+        <Text style={styles.p}>
+          Edit <Text style={styles.code}>src/App.tsx</Text> and save to reload.
         </Text>
-        <a
-          className="App-link"
+        <Text
+          style={styles.link}
           href="https://github.com/nathanjhood/ts-esbuild-react-native-web"
-          target="_blank"
-          rel="noopener noreferrer"
+          // target="_blank"
+          // rel="noopener noreferrer"
         >
-          <Text style={p}>Powered by esbuild with Typescript</Text>
-        </a>
+          Powered by esbuild with Typescript
+        </Text>
       </View>
     </View>
   )
 
 }
 
-export default App
+export default App;
 
 
 
 const styles = StyleSheet.create<{
   app: ViewStyle,
-  appHeader: ViewStyle,
-  appLogo: ImageStyle
+  header: ViewStyle,
+  logo: ImageStyle,
+  code: TextStyle,
+  p: TextStyle,
+  link: TextStyle
 }>({
   app: {
     textAlign: 'center'
   },
-  appHeader: {
+  header: {
     color: 'white',
     backgroundColor: '#282c34',
 
@@ -105,10 +95,18 @@ const styles = StyleSheet.create<{
     justifyContent: 'center',
     fontSize: '10px + 2vmin'
   },
-  appLogo: {
+  logo: {
     width: 500,
     height: 500,
     pointerEvents: 'none'
   },
-
+  code: {
+    fontFamily: 'monospace, monospace'
+  },
+  p: {
+    color: 'white'
+  },
+  link: {
+    color: "#61dafb"
+  }
 })
