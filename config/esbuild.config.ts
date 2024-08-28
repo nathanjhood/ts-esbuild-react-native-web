@@ -90,16 +90,22 @@ export function configFactory(
 
     // external: ["react", "react-dom"],
     entryPoints: [paths.appIndexJs],
-    entryNames: isEnvProduction
-      ? "static/[ext]/[name].[hash]"
-      : isEnvDevelopment && "static/[ext]/bundle",
-    // There are also additional JS chunk files if you use code splitting.
-    chunkNames: isEnvProduction
-      ? "static/[ext]/[name].[hash].chunk"
-      : isEnvDevelopment && "static/[ext]/[name].chunk",
-    assetNames: isEnvProduction
-      ? "static/media/[name].[hash][ext]"
-      : isEnvDevelopment && "static/media/[name]",
+
+    // TODO: fix paths with HTML interp plugin
+    // entryNames: isEnvProduction
+    //   ? "static/[ext]/[name].[hash]"
+    //   : isEnvDevelopment && "static/[ext]/bundle",
+    // // There are also additional JS chunk files if you use code splitting.
+    // chunkNames: isEnvProduction
+    //   ? "static/[ext]/[name].[hash].chunk"
+    //   : isEnvDevelopment && "static/[ext]/[name].chunk",
+    // assetNames: isEnvProduction
+    //   ? "static/media/[name].[hash][ext]"
+    //   : isEnvDevelopment && "static/media/[name]",
+
+    entryNames: "static/[ext]/bundle",
+    chunkNames: "static/[ext]/[name].chunk",
+    assetNames: "static/media/[name]",
 
     outbase: paths.appSrc,
     // outfile: fileURLToPath(new URL(publicOutFile, import.meta.url)), // can't use outdir and outfile together...

@@ -8,11 +8,6 @@ on:
       - main
       - release/*
       - "!development/*"
-  pull_request:
-    branches:
-      - main
-      - release/*
-      - "!development/*"
   # A push is made to a GitHub Pages-enabled branch
   page_build:
   # Allows you to run this workflow manually from the Actions tab
