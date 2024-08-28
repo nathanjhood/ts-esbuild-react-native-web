@@ -85,18 +85,21 @@ export function configFactory(
 
   return {
     metafile: true,
+    treeShaking: isEnvProduction,
     absWorkingDir: paths.appPath,
 
     // external: ["react", "react-dom"],
     entryPoints: [paths.appIndexJs],
-    // entryNames: isEnvProduction
-    //   ? "static/[ext]/[name].[hash]"
-    //   : isEnvDevelopment && "static/[ext]/bundle",
-    // // There are also additional JS chunk files if you use code splitting.
-    // chunkNames: isEnvProduction
-    //   ? "static/[ext]/[name].[hash].chunk"
-    //   : isEnvDevelopment && "static/[ext]/[name].chunk",
-    // assetNames: "static/media/[name].[hash][ext]",
+    entryNames: isEnvProduction
+      ? "static/[ext]/[name].[hash]"
+      : isEnvDevelopment && "static/[ext]/bundle",
+    // There are also additional JS chunk files if you use code splitting.
+    chunkNames: isEnvProduction
+      ? "static/[ext]/[name].[hash].chunk"
+      : isEnvDevelopment && "static/[ext]/[name].chunk",
+    assetNames: isEnvProduction
+      ? "static/media/[name].[hash][ext]"
+      : isEnvDevelopment && "static/media/[name]",
 
     outbase: paths.appSrc,
     // outfile: fileURLToPath(new URL(publicOutFile, import.meta.url)), // can't use outdir and outfile together...
@@ -110,7 +113,7 @@ export function configFactory(
       ".js": "js",
       ".tsx": "tsx",
       ".ts": "ts",
-      ".svg": "dataurl",
+      ".svg": "base64",
       ".png": "file", // 'file' loaders will be prepending by 'publicPath', i.e., 'https://www.publicurl.com/icon.png'
       ".ico": "file",
     },
@@ -160,7 +163,7 @@ export function configFactory(
       //   tsx: true,
       // }),
       esbuildPluginClean({
-        patterns: [`${paths.appBuild}/*` /** `!${destinationHTML}` */],
+        patterns: [`${paths.appBuild}/*`],
         sync: true,
         verbose: false,
       }),
@@ -170,283 +173,13 @@ export function configFactory(
         assets: {
           from: [`${paths.appPublic}/**/*`],
           to: [paths.appBuild],
+          // watch: true,
           // keepStructure: true
         },
         verbose: false,
         once: false,
         globbyOptions: {},
       }),
-      // esbuildPluginWatch(),
-      ((options?: {}) => {
-        // internal plugins...
-        /**
-         *
-         * @param {((index: number) => void)[]} tasks
-         * @returns {void}
-         */
-        const schedule = (tasks: ((index: number) => void)[]) =>
-          tasks.forEach((task, idx) => task(idx));
-        // Roll all plugins into one, so that the build callback only fires once
-        // per rebuild...
-        // The plugins are defined inline, using an `iife`-like syntax, which
-        // resembles a function that is defined and then called, in one
-        // codeblock.
-        // A simple example:
-        // @example
-        // ```ts
-        // (() => eslintPluginTsc({...options}))();
-        // ```
-        // There are three layers to the syntax, starting with the inner
-        // callback:
-        // @example
-        // ``` ts
-        // () => eslintPluginTsc()
-        // ```
-        // In order to actually call this function without needing to assign it,
-        // just wrap it in one parenthesis, and follow it with another:
-        // @example
-        // ```ts
-        // ()();
-        // ```
-        // The first parenthesis accepts a callback function definition:
-        // @example
-        // ```ts
-        // ( () => eslintPlugin({}) ) ();
-        // ```
-        // The second parenthesis, placed at the end of the expresssion,
-        // calls the expression directly in place, meaning the expression gets
-        // evaluated inline and its' output is not assigned to any variable or
-        // constant expression.
-        // Since the second parenthesis does the calling, any parameters that
-        // the callback function might accept can be specified there:
-        // @example
-        // ```ts
-        // ((params: {}) => console.log("hello", params.hello))({ hello: "world" });
-        // ```
-        // This opens up some cool ideas, like expressing an options defaults
-        // object, before calling them programmatically at execution time:
-        // @example
-        // ```ts
-        // ( (options: { sync?: boolean = true }) => eslintPluginCool(options) ) ({ sync: config.isRuntimeAsyncSupported });
-        // ```
-        return {
-          name: "plugin",
-          setup({
-            initialOptions,
-            onStart: registerOnStartCallback,
-            onEnd: registerOnEndCallback,
-            onDispose: registerOnDisposeCallback,
-            onLoad: registerOnLoadCallback,
-            onResolve: registerOnResolveCallback,
-          }) {
-            let cache = new Map();
-            let mangleCacheMap = new Map<
-              [key: string],
-              [value: string | false]
-            >();
-            /**
-             * `plugin:logger`
-             *
-             * @see https://esbuild.github.io/plugins/#using-plugins
-             */
-            ((name: string = "plugin:logger", active: boolean = true) => {
-              registerOnStartCallback(() => {
-                const tasks = [
-                  (idx: number) =>
-                    console.log(
-                      chalk.green(name),
-                      chalk.cyan("build") + "." + chalk.yellow("onStart()"),
-                      idx
-                    ),
-                  (idx: number) =>
-                    console.log(
-                      chalk.green(name),
-                      chalk.cyan("build") + "." + chalk.yellow("onStart()"),
-                      idx
-                    ),
-                ];
-                return tasks.forEach((task, idx) => task(idx));
-              });
-              registerOnEndCallback(
-                ({ errors, warnings, metafile, outputFiles, mangleCache }) => {
-                  if (errors && errors.length) {
-                  }
-                  if (warnings && warnings.length) {
-                  }
-                  if (initialOptions.metafile && metafile) {
-                  }
-                  if (initialOptions.write === false && outputFiles.length) {
-                  }
-                  if (initialOptions.mangleCache) {
-                  }
-                  const tasks: ((index: number) => void)[] = [
-                    (index: number) =>
-                      console.log(
-                        chalk.green(name),
-                        chalk.cyan("build") + "." + chalk.yellow("onEnd()"),
-                        index
-                      ),
-                    (index: number) =>
-                      console.log(
-                        chalk.green(name),
-                        chalk.cyan("build") + "." + chalk.yellow("onEnd()"),
-                        index
-                      ),
-                  ];
-                  return tasks.forEach((task, idx) => task(idx));
-                }
-              );
-              registerOnDisposeCallback(() => {
-                const tasks: ((index: number) => void)[] = [
-                  (index: number) =>
-                    console.log(
-                      chalk.green(name),
-                      chalk.cyan("build") + "." + chalk.yellow("onDispose()"),
-                      index
-                    ),
-                  (index: number) =>
-                    console.log(
-                      chalk.green(name),
-                      chalk.cyan("build") + "." + chalk.yellow("onDispose()"),
-                      index
-                    ),
-                ];
-                return tasks.forEach((task, index) => task(index));
-              });
-            })("plugin:logger", true);
-            /**
-             * `plugin:errorhandler`
-             */
-            ((name: string = "plugin:errorhandler", active: boolean = true) => {
-              registerOnEndCallback(({ errors }) => {
-                if (errors && errors.length) {
-                  errors.forEach((error) => {
-                    const tasks = [
-                      (idx: number, arr: ((idx: number, arr: []) => void)[]) =>
-                        console.error(
-                          new Error(
-                            error.text ||
-                              "Unkown error" + idx + "of" + arr.length,
-                            {
-                              cause: {
-                                detail: error.detail,
-                                id: error.id,
-                                location: error.location,
-                                notes: error.notes,
-                                pluginName: error.pluginName,
-                                text: error.text,
-                              },
-                            }
-                          )
-                        ),
-                    ];
-                    return tasks.forEach((task, idx, arr) => task(idx, arr));
-                  });
-                }
-              });
-            })("plugin:errorhandler", true);
-            /**
-             * `plugin:warnhandler`
-             */
-            ((name: string = "plugin:warnhandler", active: boolean = true) => {
-              registerOnEndCallback(({ warnings }) => {
-                if (warnings.length) {
-                  warnings.forEach((warning) => {
-                    const tasks = [
-                      (
-                        idx: number,
-                        arr: ((idx: number, arr: []) => void)[]
-                      ) => {
-                        console.warn(
-                          new Error(
-                            warning.text ||
-                              "Unkown warning" + idx + "of" + arr.length,
-                            {
-                              cause: {
-                                detail: warning.detail,
-                                id: warning.id,
-                                location: warning.location,
-                                notes: warning.notes,
-                                pluginName: warning.pluginName,
-                                text: warning.text,
-                              },
-                            }
-                          )
-                        );
-                      },
-                    ];
-                    return tasks.forEach((task, idx, arr) => task(idx, arr));
-                  });
-                }
-              });
-            })("plugin:warnhandler", true);
-            /**
-             * `plugin:txt`
-             * Load ".txt" files and return an array of words.
-             *
-             * @see https://esbuild.github.io/plugins/#on-load
-             */
-            ((name: string = "plugin:txt", active: boolean = true) => {
-              const tasks = [
-                (idx: number) =>
-                  console.info(chalk.green(name), "Registering..."),
-                (idx: number) =>
-                  registerOnLoadCallback({ filter: /\.txt$/ }, async (args) => {
-                    let text = await fs.promises.readFile(args.path, "utf8");
-                    return {
-                      contents: JSON.stringify(text.split(/\s+/)),
-                      loader: "json",
-                    };
-                  }),
-                (idx: number) => console.info(chalk.green(name), "Registered."),
-              ];
-              return tasks.forEach((task, idx) => task(idx));
-            })("plugin:txt", true);
-            /**
-             * `plugin:env`
-             *
-             * @see https://esbuild.github.io/plugins/#using-plugins
-             */
-            ((name: string = "plugin:env", active: boolean = true) => {
-              const tasks: ((idx: number) => void)[] = [
-                (idx: number) =>
-                  console.info(
-                    chalk.blue(new Date()),
-                    chalk.green(name),
-                    "Registering..."
-                  ),
-                (idx: number) =>
-                  registerOnResolveCallback(
-                    { namespace: "plugin:env", filter: /^env$/ },
-                    (args) => ({
-                      path: args.path,
-                      namespace: "plugin:env",
-                    })
-                  ),
-                (idx: number) =>
-                  registerOnLoadCallback(
-                    {
-                      filter: /.*/,
-                      namespace: "plugin:env",
-                    } satisfies esbuild.OnLoadOptions,
-                    (args: esbuild.OnLoadArgs) =>
-                      ({
-                        contents: JSON.stringify(process.env),
-                        loader: "json",
-                      }) satisfies esbuild.OnLoadResult
-                  ),
-                (idx: number) =>
-                  console.info(
-                    chalk.blue(new Date()),
-                    chalk.green(name),
-                    "Registered."
-                  ),
-              ];
-              return tasks.forEach((task, idx) => task(idx));
-            })("plugin:env", true);
-          },
-        } satisfies esbuild.Plugin;
-      })(),
     ],
   } satisfies esbuild.BuildOptions;
   // Use BuildOptions, not CommonOptions, because:
