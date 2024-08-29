@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "app",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
+    "baseUrl": "./",
+    "rootDirs": [
+      "(?:^|/)src"
+    ],
+    "outDir": "./build",
+    // Ensure that .d.ts files are created by tsc, but not .js files
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
+    "jsx": "react-jsx",
+    "module": "NodeNext"
+  },
+  "include": [
+    "./app.json",
+    "./src/esbuild-env.d.ts",
+    "./src/react-app-env.d.ts",
+    "./src/react-native-web.d.ts",
+    "./src/**/*.tsx",
+    "./index.native.ts"
+  ],
+  "exclude": [
+    "(?:^|/)node_modules/",
+    "(?:^|/)dist/",
+    "(?:^|/)build/"
+  ]
+}

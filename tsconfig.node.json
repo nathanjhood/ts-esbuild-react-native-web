@@ -7,9 +7,13 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "outDir": "./dist"
+    "resolveJsonModule": true,
+    "outDir": "./build",
+    "baseUrl": "./"
   },
-  "include": [
-    "./scripts"
+  "exclude": [
+    "(?:^|/)node_modules/",
+    "(?:^|/)dist/",
+    "(?:^|/)build/",
   ]
 }

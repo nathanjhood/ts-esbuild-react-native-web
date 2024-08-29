@@ -19,13 +19,27 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
     // custom/required
-    "composite": true
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.react.tsbuildinfo",
+    "outDir": "./build",
+    "baseUrl": "./",
+    "rootDirs": [
+      "(?:^|/)src/"
+    ],
   },
   "include": [
-    "src"
+    "./src/**/*.tsx"
+  ],
+  "exclude": [
+    // "(?:^|/)node_modules/",
+    // "(?:^|/)dist/",
+    // "(?:^|/)build/",
+    // "(?:^|/)config/",
+    // "(?:^|/)scripts/",
+    // "(?:^|/)packages/",
+    "**/*(!.tsx)"
   ]
 }
