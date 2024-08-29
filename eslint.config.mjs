@@ -5,6 +5,9 @@
  */
 
 // @ts-ignore
+import EslintConfigPrettier from "eslint-config-prettier";
+
+// @ts-ignore
 import EslintPluginComments from "eslint-plugin-eslint-comments";
 // @ts-ignore
 import EslintPluginReact from "eslint-plugin-react";
@@ -12,8 +15,6 @@ import EslintPluginReact from "eslint-plugin-react";
 import EslintPluginReactHooks from "eslint-plugin-react-hooks";
 // @ts-ignore
 import EslintPluginReactNative from "eslint-plugin-react-native";
-// // @ts-ignore
-// import ReactNativeEslintConfig from "@react-native/eslint-config";
 // @ts-ignore
 import EslintPluginJest from "eslint-plugin-jest";
 // @ts-ignore
@@ -21,7 +22,7 @@ import babelParser from "@babel/eslint-parser";
 
 import typescriptParser from "@typescript-eslint/parser";
 
-import globals from "globals";
+// import globals from 'globals';
 // // @ts-ignore
 // import jestGlobals from "jest/globals";
 
@@ -358,6 +359,7 @@ export const configs = [
       quotes: [1, "single", { avoidEscape: true, allowTemplateLiterals: true }],
     },
   },
+  EslintConfigPrettier,
 ];
 
 export default configs;
