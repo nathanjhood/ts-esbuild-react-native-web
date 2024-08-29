@@ -1,20 +1,18 @@
 import * as esbuild from "esbuild";
-import * as React from "react";
 
-const esbuildPluginEnv: typeof import("./plugins/EsbuildPluginEnv").EsbuildPluginEnv =
-  require("./plugins/EsbuildPluginEnv").EsbuildPluginEnv;
-
-const esbuildPluginWatch: typeof import("./plugins/WatchPlugin").default =
-  require("./plugins/WatchPlugin").default;
-const esbuildPluginTsc: typeof import("esbuild-plugin-tsc") = require("esbuild-plugin-tsc");
-const esbuildPluginCopy: typeof import("esbuild-plugin-copy").default =
-  require("esbuild-plugin-copy").default;
-const esbuildPluginClean: typeof import("esbuild-plugin-clean").default =
-  require("esbuild-plugin-clean").default;
+const esbuildPluginEnv: typeof import("./plugins/EnvPlugin").default =
+  require("./plugins/EnvPlugin").default;
+// const esbuildPluginWatch: typeof import("./plugins/WatchPlugin").default =
+//   require("./plugins/WatchPlugin").default;
+// const esbuildPluginTsc: typeof import("esbuild-plugin-tsc") = require("esbuild-plugin-tsc");
+// const esbuildPluginCopy: typeof import("esbuild-plugin-copy").default =
+//   require("esbuild-plugin-copy").default;
+// const esbuildPluginClean: typeof import("esbuild-plugin-clean").default =
+//   require("esbuild-plugin-clean").default;
 
 const fs: typeof import("fs") = require("fs");
 const path: typeof import("path") = require("path");
-const chalk: typeof import("chalk") = require("react-dev-utils/chalk");
+const chalk: typeof import("react-dev-utils/chalk") = require("react-dev-utils/chalk");
 
 const moduleFileExtensions: typeof import("./paths").moduleFileExtensions =
   require("./paths").moduleFileExtensions;
@@ -87,19 +85,27 @@ export function configFactory(
 
   return {
     metafile: true,
-    treeShaking: true,
+    treeShaking: isEnvProduction,
     absWorkingDir: paths.appPath,
 
     // external: ["react", "react-dom"],
     entryPoints: [paths.appIndexJs],
-    entryNames: isEnvProduction
-      ? "static/[ext]/[name].[hash]"
-      : isEnvDevelopment && "static/[ext]/bundle",
-    // There are also additional JS chunk files if you use code splitting.
-    chunkNames: isEnvProduction
-      ? "static/[ext]/[name].[hash].chunk"
-      : isEnvDevelopment && "static/[ext]/[name].chunk",
-    assetNames: "static/media/[name].[hash][ext]",
+
+    // TODO: fix paths with HTML interp plugin
+    // entryNames: isEnvProduction
+    //   ? "static/[ext]/[name].[hash]"
+    //   : isEnvDevelopment && "static/[ext]/bundle",
+    // // There are also additional JS chunk files if you use code splitting.
+    // chunkNames: isEnvProduction
+    //   ? "static/[ext]/[name].[hash].chunk"
+    //   : isEnvDevelopment && "static/[ext]/[name].chunk",
+    // assetNames: isEnvProduction
+    //   ? "static/media/[name].[hash][ext]"
+    //   : isEnvDevelopment && "static/media/[name]",
+
+    entryNames: "static/[ext]/bundle",
+    chunkNames: "static/[ext]/[name].chunk",
+    assetNames: "static/media/[name]",
 
     outbase: paths.appSrc,
     // outfile: fileURLToPath(new URL(publicOutFile, import.meta.url)), // can't use outdir and outfile together...
@@ -113,7 +119,7 @@ export function configFactory(
       ".js": "js",
       ".tsx": "tsx",
       ".ts": "ts",
-      ".svg": "file",
+      ".svg": "base64",
       ".png": "file", // 'file' loaders will be prepending by 'publicPath', i.e., 'https://www.publicurl.com/icon.png'
       ".ico": "file",
     },
@@ -158,6 +164,11 @@ export function configFactory(
         verbose: true,
         loader: "json",
       }),
+      // esbuildPluginSVG({
+      //   sync: true,
+      //   verbose: true,
+      //   loader: "json",
+      // }),
     ],
   } satisfies esbuild.BuildOptions;
   // Use BuildOptions, not CommonOptions, because:

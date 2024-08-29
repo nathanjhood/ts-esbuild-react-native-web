@@ -23,7 +23,7 @@ process.on("unhandledRejection", (err) => {
 // Ensure environment variables are read.
 require("../config/env");
 
-const fs: typeof import("fs") = require("fs");
+const fs: typeof import("fs-extra") = require("fs-extra");
 const chalk: typeof import("react-dev-utils/chalk") = require("react-dev-utils/chalk");
 // const webpack = require("webpack");
 // const WebpackDevServer = require("webpack-dev-server");
@@ -97,6 +97,12 @@ checkBrowsers(paths.appPath, isInteractive)
       return;
     }
 
+    // Remove all content but keep the directory so that
+    // if you're in it, you don't end up in Trash
+    fs.emptyDirSync(paths.appBuild);
+    // Merge with the public folder
+    copyPublicFolder();
+
     const config = configFactory("development");
     const protocol = process.env.HTTPS === "true" ? "https" : "http";
     const appName = require(paths.appPackageJson).name;
@@ -136,9 +142,9 @@ checkBrowsers(paths.appPath, isInteractive)
         format: "esm",
         banner: {
           // NODE - Append Hot reload event listener to DOM
-          // js: `new EventSource('/esbuild').addEventListener('change', () => location.reload());`,
+          js: `new EventSource('/esbuild').addEventListener('change', () => location.reload());`,
           // // BROSWER - Append Hot reload event listener to DOM
-          js: `(() => new EventSource("/esbuild").onmessage = () => location.reload())();`,
+          // js: `(() => new EventSource("/esbuild").onmessage = () => location.reload())();`,
         },
         ...config,
       })
@@ -230,3 +236,10 @@ checkBrowsers(paths.appPath, isInteractive)
     }
     process.exit(1);
   });
+
+function copyPublicFolder() {
+  fs.copySync(paths.appPublic, paths.appBuild, {
+    dereference: true,
+    // filter: (file) => file !== paths.appHtml,
+  });
+}
