@@ -28,3 +28,4 @@ VERSION eol=lf
 *.{bmp} binary
 
 tsconfig.*.json linguist-language=JSON-with-Comments
+.vscode/*.json linguist-language=JSON-with-Comments
