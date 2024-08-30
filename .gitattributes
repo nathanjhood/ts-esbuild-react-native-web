@@ -26,3 +26,5 @@ VERSION eol=lf
 *.{jpg} binary
 *.{ico} binary
 *.{bmp} binary
+
+tsconfig.*.json linguist-language=JSON-with-Comments
