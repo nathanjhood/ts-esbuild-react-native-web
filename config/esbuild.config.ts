@@ -1,10 +1,12 @@
+// @ts-check
+
 import * as esbuild from "esbuild";
 
 const esbuildPluginEnv: typeof import("./plugins/EnvPlugin").default =
   require("./plugins/EnvPlugin").default;
 // const esbuildPluginWatch: typeof import("./plugins/WatchPlugin").default =
 //   require("./plugins/WatchPlugin").default;
-// const esbuildPluginTsc: typeof import("esbuild-plugin-tsc") = require("esbuild-plugin-tsc");
+const esbuildPluginTsc: typeof import("esbuild-plugin-tsc") = require("esbuild-plugin-tsc");
 // const esbuildPluginCopy: typeof import("esbuild-plugin-copy").default =
 //   require("esbuild-plugin-copy").default;
 // const esbuildPluginClean: typeof import("esbuild-plugin-clean").default =
@@ -12,7 +14,9 @@ const esbuildPluginEnv: typeof import("./plugins/EnvPlugin").default =
 
 const fs: typeof import("fs") = require("fs");
 const path: typeof import("path") = require("path");
-const chalk: typeof import("react-dev-utils/chalk") = require("react-dev-utils/chalk");
+
+// @ts-ignore
+const chalk: typeof import("chalk") = require("react-dev-utils/chalk");
 
 const moduleFileExtensions: typeof import("./paths").moduleFileExtensions =
   require("./paths").moduleFileExtensions;
@@ -159,18 +163,274 @@ export function configFactory(
     //   "process.env.NODE_ENV": env.raw.NODE_ENV
     // },
     plugins: [
-      esbuildPluginEnv({
-        sync: true,
-        verbose: true,
-        loader: "json",
-      }),
+      // (({ active }) => {
+      //   if (!active) return;
+      //   return {
+      //     name: "plugins",
+      //     setup(build: esbuild.PluginBuild) {
+      //       return new Promise<void>((resolveSetup, rejectSetup) => {
+      //         return resolveSetup();
+      //       });
+      //     },
+      //   };
+      // })({ active: true }),
+      ((active) => {
+        if (!active) return;
+        return {
+          name: "plugins",
+          setup(build: esbuild.PluginBuild) {
+            // extracted args from "setup(build)"
+            const {
+              onLoad: registerOnLoadCallback,
+              onResolve: registerOnResolveCallback,
+              onStart: registerOnStartCallback,
+              onEnd: registerOnEndCallback,
+              onDispose: registerOnDisposeCallback,
+              initialOptions,
+            } = build;
+            // function declarations
+            const getNow = () => new Date(Date.now());
+            const getCurrentDate = () => getNow().toLocaleDateString();
+            const getCurrentTime = () => getNow().toLocaleTimeString();
+            const stringifyEnv = () => JSON.stringify(process.env);
+            const env = stringifyEnv(); // do the stringify once only
+            /**
+             *
+             * @returns
+             */
+            const logOnStartCallback = () => {
+              return console.info(
+                chalk.dim.inverse(getCurrentDate() + " " + getCurrentTime()),
+                "::",
+                chalk.cyanBright("esbuild") +
+                  "." +
+                  chalk.yellowBright("onStart()")
+              );
+            };
+            /**
+             *
+             * @returns
+             */
+            const logOnEndCallback = () => {
+              return console.info(
+                chalk.inverse(getCurrentDate() + " " + getCurrentTime()),
+                "::",
+                chalk.cyanBright("esbuild") +
+                  "." +
+                  chalk.yellowBright("onEnd()")
+              );
+            };
+            /**
+             *
+             * @returns
+             */
+            const logOnDisposeCallback = () => {
+              return console.info(
+                chalk.inverse(getCurrentDate() + " " + getCurrentTime()),
+                "::",
+                chalk.cyanBright("esbuild") +
+                  "." +
+                  chalk.yellowBright("onDispose()")
+              );
+            };
+            /**
+             *
+             * @returns
+             */
+            const logOnResolveCallback = () => {
+              return console.info(
+                chalk.inverse(getCurrentDate() + " " + getCurrentTime()),
+                "::",
+                chalk.cyanBright("esbuild") +
+                  "." +
+                  chalk.yellowBright("onResolve()")
+              );
+            };
+            /**
+             *
+             * @returns
+             */
+            const logOnLoadCallback = () => {
+              return console.info(
+                chalk.inverse(getCurrentDate() + " " + getCurrentTime()),
+                "::",
+                chalk.cyanBright("esbuild") +
+                  "." +
+                  chalk.yellowBright("onLoad()")
+              );
+            };
+            return new Promise<void>((resolveSetup, rejectSetup) => {
+              registerOnStartCallback(() => {
+                return new Promise<esbuild.OnStartResult | null | void>(
+                  (resolveOnStartCallback, rejectOnStartCallback) => {
+                    [
+                      () => {
+                        return;
+                      },
+                      () => {
+                        return logOnStartCallback();
+                      },
+                      () => {
+                        return;
+                      },
+                    ].forEach((task) => task());
+                    return resolveOnStartCallback();
+                  }
+                );
+              });
+              registerOnEndCallback(() => {
+                return new Promise<esbuild.OnEndResult | null | void>(
+                  (resolveOnEndCallback, rejectOnEndCallback) => {
+                    [
+                      () => {
+                        return;
+                      },
+                      () => {
+                        return logOnEndCallback();
+                      },
+                      () => {
+                        return;
+                      },
+                    ].forEach((task) => task());
+                    return resolveOnEndCallback();
+                  }
+                );
+              });
+              registerOnDisposeCallback(() => {
+                return new Promise<void>(
+                  (resolveOnDisposeCallback, rejectOnDisposeCallback) => {
+                    [
+                      () => {
+                        return;
+                      },
+                      () => {
+                        return logOnDisposeCallback();
+                      },
+                      () => {
+                        return;
+                      },
+                    ].forEach((task) => task());
+                    return resolveOnDisposeCallback();
+                  }
+                );
+              });
+              ((active) => {
+                if (!active) return;
+                const onResolveOptions = {
+                  filter: /^env$/,
+                };
+                registerOnResolveCallback(onResolveOptions, (args) => {
+                  const onResolveResult = {
+                    path: args.path,
+                    namespace: "env",
+                  };
+                  return new Promise(
+                    (
+                      resolveEnvOnResolveCallback,
+                      rejectEnvOnResolveCallback
+                    ) => {
+                      [
+                        () => {
+                          return;
+                        },
+                        () => {
+                          return logOnResolveCallback();
+                        },
+                        () => {
+                          return;
+                        },
+                      ].forEach((task) => task());
+                      return resolveEnvOnResolveCallback(onResolveResult);
+                    }
+                  );
+                });
+                const onLoadOptions = {
+                  filter: /.*/,
+                  namespace: "env",
+                };
+                registerOnLoadCallback(onLoadOptions, (args) => {
+                  return new Promise(
+                    (resolveEnvOnLoadCallback, rejectEnvOnLoadCallback) => {
+                      [
+                        () => {
+                          return;
+                        },
+                        () => {
+                          return logOnLoadCallback();
+                        },
+                        () => {
+                          return;
+                        },
+                      ].forEach((task) => task());
+                      return resolveEnvOnLoadCallback({
+                        contents: env,
+                        loader: "json",
+                      });
+                    }
+                  );
+                });
+              })(true);
+              return resolveSetup();
+            });
+          },
+        };
+      })(true),
+      // ((active: boolean, verbose?: boolean) => {
+      //   if (!active) return;
+      //   const plugin = {
+      //     name: "typescript-paths",
+      //     setup(build: esbuild.PluginBuild) {
+      //       // Redirect all paths starting with "@/*" to "./src/*"
+      //       build.onResolve({ filter: /^@\// }, (args) => {
+      //         const argPath = args.path as string;
+      //         const newPath = argPath.slice(2);
+      //         // console.log("n is:", newPath);
+      //         // console.log("new path is:", {
+      //         //   path: path.join(paths.appSrc, newPath),
+      //         // });
+      //         return { path: path.join(paths.appSrc, newPath) };
+      //       });
+      //     },
+      //   };
+      //   return plugin;
+      // })(true),
+      // (() => {
+      //   const plugin = {
+      //     name: "logger",
+      //     setup(build: esbuild.PluginBuild) {
+      //       console.info("setting up");
+      //       return new Promise<void>((resolveSetup, rejectSetup) => {
+      //         build.onStart(() => {
+      //           return new Promise<esbuild.OnStartResult | null | void>(
+      //             (resolveOnStart, rejectOnStart) => {
+      //               console.info(chalk.white.bgYellow("esbuild.onStart()"));
+      //               return resolveOnStart();
+      //             }
+      //           );
+      //         });
+      //         return resolveSetup();
+      //       });
+      //     },
+      //   };
+      //   return plugin;
+      // })(),
+      // esbuildPluginEnv({
+      //   sync: true,
+      //   verbose: true,
+      //   loader: "json",
+      // }),
+      // esbuildPluginTsc({
+      //   tsconfigPath: paths.appTsConfig,
+      //   tsx: true,
+      //   force: true,
+      // }),
       // esbuildPluginSVG({
       //   sync: true,
       //   verbose: true,
       //   loader: "json",
       // }),
     ],
-  } satisfies esbuild.BuildOptions;
+  }; // satisfies esbuild.BuildOptions;
   // Use BuildOptions, not CommonOptions, because:
   // - CommonOptions is shared by '.build' and '.context', of which we are using both
   // - CommonOptions is shared by BuildOptions and TransformOptions, but we're not using '.transform', currently
