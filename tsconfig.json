@@ -8,13 +8,7 @@
       "path": "./tsconfig.tsx.json"
     },
     {
-      "path": "./tsconfig.esbuild.json"
-    },
-    {
-      "path": "./tsconfig.react.native.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
+      "path": "./tsconfig.react.web.json"
     }
   ]
 }

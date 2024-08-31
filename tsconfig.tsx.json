@@ -17,28 +17,15 @@
     "esModuleInterop": true,
     // Disallow features that require cross-file awareness
     "isolatedModules": true,
-    // It's also recommended to enable verbatimModuleSyntax which requires you
-    // to write your type imports & exports using explicit syntax.
-    // Refactoring may be necessary.
-    "verbatimModuleSyntax": true,
+    // // It's also recommended to enable verbatimModuleSyntax which requires you
+    // // to write your type imports & exports using explicit syntax.
+    // // Refactoring may be necessary.
+    // "verbatimModuleSyntax": true,
     // custom/required:
     // The below options were inferred by further usage of the suggestions above
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsx.tsbuildinfo",
-    "outDir": "./build",
-    "baseUrl": "./",
-    "noImplicitAny": false,
-    "jsx": "react",
-    "rootDirs": [
-      "(?:^|/)"
-    ]
-  },
-  "include": [
-    "./app.json"
-  ],
-  "exclude": [
-    "./node_modules/",
-    "./dist/",
-    "./build/"
-  ]
+    "noEmit": false,
+    "emitDeclarationOnly": true
+  }
 }

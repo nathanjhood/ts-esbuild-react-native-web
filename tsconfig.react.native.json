@@ -5,26 +5,26 @@
   // "@react-native/typescript-config/tsconfig.json"
   // ]
   "compilerOptions": {
-    "target": "esnext",
-    "module": "es2015",
+    "target": "ESNext",
+    "module": "ES2015",
     "types": [
-      "react-native",
+      "react-native-web", // originally "react-native"
       "jest"
     ],
     "lib": [
-      "es2019",
-      "es2020.bigint",
-      "es2020.date",
-      "es2020.number",
-      "es2020.promise",
-      "es2020.string",
-      "es2020.symbol.wellknown",
-      "es2021.promise",
-      "es2021.string",
-      "es2021.weakref",
-      "es2022.array",
-      "es2022.object",
-      "es2022.string"
+      "ES2019",
+      "ES2020.bigint",
+      "ES2020.date",
+      "ES2020.number",
+      "ES2020.promise",
+      "ES2020.string",
+      "ES2020.symbol.wellknown",
+      "ES2021.promise",
+      "ES2021.string",
+      "ES2021.weakref",
+      "ES2022.array",
+      "ES2022.object",
+      "ES2022.string"
     ],
     "allowJs": true,
     "jsx": "react-native",
@@ -50,8 +50,5 @@
   },
   "exclude": [
     "**/Pods/**",
-    // custom
-    "./config/",
-    "./scripts/"
   ]
 }
