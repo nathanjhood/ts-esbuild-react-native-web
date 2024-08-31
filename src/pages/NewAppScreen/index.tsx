@@ -6,12 +6,12 @@
  *
  */
 
-import Colors from "./components/Colors";
+import Colors from "../../components/Colors";
 import DebugInstructions from "./components/DebugInstructions";
-import Header from "./components/Header";
-import HermesBadge from "./components/HermesBadge";
-import LearnMoreLinks from "./components/LearnMoreLinks";
-import ReloadInstructions from "./components/ReloadInstructions";
+import Header from "../../components/Header";
+import HermesBadge from "../../components/HermesBadge";
+import LearnMoreLinks from "../../components/LearnMoreLinks";
+import ReloadInstructions from "../../components/ReloadInstructions";
 
 export {
   Colors,
