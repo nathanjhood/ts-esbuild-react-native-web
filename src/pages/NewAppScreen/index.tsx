@@ -7,7 +7,7 @@
  */
 
 import Colors from "../../components/Colors";
-import DebugInstructions from "./components/DebugInstructions";
+import DebugInstructions from "../../components/DebugInstructions";
 import Header from "../../components/Header";
 import HermesBadge from "../../components/HermesBadge";
 import LearnMoreLinks from "../../components/LearnMoreLinks";
