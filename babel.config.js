@@ -12,6 +12,7 @@ module.exports = {
     "module:@react-native/babel-preset",
   ],
   plugins: [
+    "react-native-web",
     [
       "module-resolver",
       {
