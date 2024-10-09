@@ -1,4 +1,4 @@
-build
+.bak*
 
 # assets
 !*.png
