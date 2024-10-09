@@ -1,12 +1,16 @@
 {
   "name": "ts-esbuild-react-native-web",
   "author": "nathanjhood <nathanjhood@googlemail.com>",
-  "homepage": "https://nathanjhood.github.io/ts-esbuild-react-native-web/",
+  "homepage": "https://nathanjhood.github.io/ts-esbuild-react-native-web",
   "license": "MIT",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.1.0",
   "type": "module",
   "icon": "public/favicon.ico",
+  "files": [
+    "LICENSE",
+    "dist"
+  ],
   "scripts": {
     "start": "esbuild-scripts start",
     "build": "esbuild-scripts build",
