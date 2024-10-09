@@ -2622,6 +2622,14 @@
     "@typescript-eslint/types" "8.8.1"
     eslint-visitor-keys "^3.4.3"
 
+"@typescript-eslint/visitor-keys@8.8.1":
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.8.1.tgz#0fb1280f381149fc345dfde29f7542ff4e587fc5"
+  integrity sha512-0/TdC3aeRAsW7MDvYRwEc1Uwm0TIBfzjPFgg60UU2Haj5qsCs9cc3zNgY71edqE3LbWfF/WoZQd3lJoDXFQpag==
+  dependencies:
+    "@typescript-eslint/types" "8.8.1"
+    eslint-visitor-keys "^3.4.3"
+
 abab@^2.0.6:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
