@@ -29,9 +29,9 @@ env:
   GITHUB_PAGES: true
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   NODE_ENV: "production"
-  BUILD_PATH: "build"
-  PUBLIC_URL: "https://nh-pages.stoneydsp.com/ts-esbuild-react-native-web/"
-  HOST: "nh-pages.stoneydsp.com"
+  BUILD_PATH: "dist"
+  PUBLIC_URL: "https://nathanjhood.github.io/ts-esbuild-react-native-web"
+  HOST: "nathanjhood.github.io"
   PORT: 80
   HTTPS: true
   TSC_COMPILE_ON_ERROR: false

@@ -1,8 +1,6 @@
 # ts-esbuild-react-native-web
 
-Use React Native components in your web application.
-
-A [React-Native-Web](https://necolas.github.io/react-native-web/) - *for* web - starter project template, powered by [esbuild](https://esbuild.github.io/) with Typescript support and a hot-reloading dev server.
+A template project for modern web front-end applications using React Native Web.
 
 [![Node](https://github.com/nathanjhood/ts-esbuild-react/actions/workflows/node.yml/badge.svg)](https://github.com/nathanjhood/ts-esbuild-react/actions/workflows/node.yml)
 
@@ -68,41 +66,34 @@ yarn serve -s build
 
 ## About
 
-This repository is a simple demonstration of the `create-react-app --template typescript` boilerplate code, with the `App.tsx` and `index.tsx` templates swapped for React-Native-Web ones, all powered by [esbuild](https://esbuild.github.io/).
+Use React Native components in your web application.
 
-The usual `react-scripts`'s Webpack implementation has been replaced with a similar set of functionality using esbuild, using ideas from the articles referenced below, along with the standard react/esbuild/typescript official docs.
+A [React-Native-Web](https://necolas.github.io/react-native-web/) - *for* web - starter project template, powered by [esbuild-scripts](https://github.com/nathanjhood/esbuild-scripts) with Typescript support and a hot-reloading dev server.
+
+This template repository is a port of the official React `create-react-app --template typescript` boilerplate code; the `App.tsx` and `index.tsx` templates replaced with equivalent React-Native-Web ones, all powered by [esbuild](https://esbuild.github.io/) with Typescript.
+
+This template ships with `@nathanjhood/esbuild-scripts`; In which, the usual `react-scripts`'s Webpack-powered implementation has been replaced with a similar set of functionality using esbuild.*
 
 ---
 
 ### Commands
 
 ```json
-{
-    "start": "tsx ./scripts/start.ts",
-    "test": "tsx ./scripts/test.ts",
-    "build": "tsx ./scripts/build.ts",
-    "type-check": "tsc --noEmit",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "format": "prettier --check ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.mjs",
-    "format:fix": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.mjs"
+"scripts": {
+  "start": "esbuild-scripts start",
+  "build": "esbuild-scripts build",
+  "test": "echo \"tests not implmented yet\"",
+  "type-check": "tsc --noEmit",
+  "gen:css": "tailwindcss --config tailwind.config.js --postcss postcss.config.js --output src/styles.css",
+  "gen:certs": "openssl req -x509 -newkey rsa:4096 -keyout app.key -out app.cert -days 9999 -nodes -subj /CN=127.0.0.1",
+  "lint": "eslint .",
+  "lint:fix": "eslint . --fix",
+  "format": "prettier --check ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.mjs",
+  "format:fix": "prettier --write ./**/*.{js,jsx,ts,tsx,css,md,json} --config ./prettier.config.mjs"
 }
 ```
 
 ---
-
-### Motivations
-
-Just something I needed to investigate in isolation, to be used as a guideline for other projects, elsewhere.
-
-In future, I *might* properly functionize the scripts, improve the Typescript server, *possibly* look at hooking into the React dev overlay for error reporting, "eject"... and more, periodically, if time permits.
-
-Feel free to express some interest, as this might well encourage me to put more time on this.
-
-Or, take inspiration from it for your own projects.
-
----
-
 ## Further Reading
 
 - [https://necolas.github.io/react-native-web/](https://necolas.github.io/react-native-web/)
