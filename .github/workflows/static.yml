@@ -53,6 +53,7 @@ jobs:
         with:
           cache: yarn
           cache-dependency-path: yarn.lock
+          node-version: 20.17
       - name: Install
         shell: bash
         working-directory: ${{ github.workspace }}

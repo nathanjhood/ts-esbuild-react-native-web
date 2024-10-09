@@ -1,4 +1,21 @@
 {
+  "clangd.detectExtensionConflicts": true,
+  "cmake.configureOnOpen": false,
+  "cmake.configureOnEdit": false,
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.ts": "always",
+    "source.organizeImports": "always",
+    "source.sortImports": "always",
+    "source.addMissingImports.ts": "never",
+    "source.removeUnused.ts": "never",
+    "source.removeUnusedImports": "never"
+  },
+  "prettier.enable": true,
+  "prettier.useEditorConfig": true,
+  "prettier.configPath": "prettier.config.mjs",
   "javascript.format.enable": true,
   "javascript.validate.enable": true,
   "typescript.format.enable": true,
@@ -14,6 +31,11 @@
       "url": "https://json.schemastore.org/tsconfig"
     }
   ],
+  "[cpp]": {
+    "editor.wordBasedSuggestions": "off",
+    "editor.suggest.insertMode": "replace",
+    "editor.semanticHighlighting.enabled": true
+  },
   "[javascript]": {
     "editor.maxTokenizationLineLength": 2500,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -26,14 +48,14 @@
       "strings": true
     },
     "editor.suggest.insertMode": "replace",
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[jsonc]": {
     "editor.quickSuggestions": {
       "strings": true
     },
     "editor.suggest.insertMode": "replace",
-    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "[markdown]": {
     "editor.unicodeHighlight.ambiguousCharacters": false,
@@ -45,7 +67,7 @@
       "strings": "off",
       "other": "off"
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[css]": {
     "editor.suggest.insertMode": "replace",
@@ -57,24 +79,79 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.enable": true,
-  "eslint.format.enable": false,
-  "prettier.enable": true,
-  "prettier.useEditorConfig": true,
-  "prettier.bracketSameLine": false,
   "files.associations": {
-    ".env.*": "properties",
     "**.d.ts": "typescript",
+    "*.css": "tailwindcss",
+    "**.bash**": "shellscript",
+    "**.cmake": "cmake",
+    ".editorconfig": "editorconfig",
+    "**.{js,cjs,mjs}.map": "javascript",
+    "tsconfig.*.json": "jsonc",
+    ".env.*": "properties",
     "**.d.cts": "typescript",
     "**.d.mts": "typescript",
     "**.jsx": "javascriptreact",
     "**.tsx": "typescriptreact",
-    "**/.tsconfig/*.json": "jsonc",
-    "**/.editorconfig": "editorconfig"
+    "*.tcc": "cpp",
+    "vector": "cpp",
+    "cctype": "cpp",
+    "clocale": "cpp",
+    "cmath": "cpp",
+    "cstdarg": "cpp",
+    "cstddef": "cpp",
+    "cstdio": "cpp",
+    "cstdlib": "cpp",
+    "cstring": "cpp",
+    "ctime": "cpp",
+    "cwchar": "cpp",
+    "cwctype": "cpp",
+    "array": "cpp",
+    "atomic": "cpp",
+    "bit": "cpp",
+    "chrono": "cpp",
+    "compare": "cpp",
+    "concepts": "cpp",
+    "condition_variable": "cpp",
+    "cstdint": "cpp",
+    "deque": "cpp",
+    "map": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "exception": "cpp",
+    "algorithm": "cpp",
+    "functional": "cpp",
+    "iterator": "cpp",
+    "memory": "cpp",
+    "memory_resource": "cpp",
+    "numeric": "cpp",
+    "optional": "cpp",
+    "random": "cpp",
+    "ratio": "cpp",
+    "string_view": "cpp",
+    "system_error": "cpp",
+    "tuple": "cpp",
+    "type_traits": "cpp",
+    "utility": "cpp",
+    "fstream": "cpp",
+    "initializer_list": "cpp",
+    "iosfwd": "cpp",
+    "iostream": "cpp",
+    "istream": "cpp",
+    "limits": "cpp",
+    "mutex": "cpp",
+    "new": "cpp",
+    "numbers": "cpp",
+    "ostream": "cpp",
+    "semaphore": "cpp",
+    "sstream": "cpp",
+    "stdexcept": "cpp",
+    "stop_token": "cpp",
+    "streambuf": "cpp",
+    "thread": "cpp",
+    "cinttypes": "cpp",
+    "typeinfo": "cpp"
   },
-  "files.insertFinalNewline": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
   "editor.rulers": [
     80
   ],
@@ -82,5 +159,5 @@
   "editor.formatOnSave": true,
   "editor.formatOnType": true,
   "editor.insertSpaces": true,
-  "editor.trimAutoWhitespace": true,
+  "editor.trimAutoWhitespace": true
 }
