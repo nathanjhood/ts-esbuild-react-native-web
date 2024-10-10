@@ -83,3 +83,16 @@ declare module "*.module.sass" {
 declare module "*.css";
 declare module "*.scss";
 declare module "*.sass";
+
+declare module "env" {
+  const env: NodeJS.ProcessEnv & { readonly [key: string]: string };
+  export default env;
+}
+
+declare module "react-error-overlay" {
+  export function stopReportingRuntimeErrors(): void;
+  const m: {
+    stopReportingRuntimeErrors(): void;
+  };
+  export default m;
+}
