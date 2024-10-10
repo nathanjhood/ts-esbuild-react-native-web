@@ -4,11 +4,15 @@ import reportWebVitals = require("./reportWebVitals");
 import serviceWorkerRegistration = require("./serviceWorkerRegistration");
 import App = require("./App");
 
-if (process.env.NODE_ENV === "development") {
-  import("react-error-overlay").then((m) => {
-    m.stopReportingRuntimeErrors();
-  });
-}
+// 'react-error-overlay' is not meant for use in production. You should ensure it
+// is not included in your build to reduce bundle size. To use it during
+// development, ucomment the code below. Also consider setting 'jsx' to
+// 'react-jsxdev' in the tsconfig file.
+// if (process.env.NODE_ENV === "development") {
+//   import("react-error-overlay").then((m) => {
+//     m.stopReportingRuntimeErrors();
+//   });
+// }
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
