@@ -35,8 +35,6 @@ env:
   PORT: 80
   HTTPS: true
   TSC_COMPILE_ON_ERROR: false
-  # fast refresh probably does nothing in prod...
-  FAST_REFRESH: true
 
 jobs:
   # Single deploy job since we're just deploying
