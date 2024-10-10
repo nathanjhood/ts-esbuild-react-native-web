@@ -41,13 +41,15 @@
     "isolatedModules": true,
     // recommended
     "verbatimModuleSyntax": true,
-    // custom
-    "jsx": "react-jsxdev", // try "react-jsxdev" for development mode, // Nativewind requires 'react-jsx'
-    "jsxImportSource": "react", // "nativewind" is coming...
+    // Typechecking
     "composite": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "skipLibCheck": false,
+    // React
+    "jsx": "react-jsx", // try "react-jsxdev" for development mode,
+    "jsxImportSource": "react",
+    // custom
     "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo",
     "paths": {
       "@/*": ["./src/*"],
