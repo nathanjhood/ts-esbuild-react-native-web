@@ -1,8 +1,12 @@
+import type RC = require("react");
 import type RN = require("react-native");
+import React = require("react");
 import ReactNative = require("react-native");
 import logo = require("./logo.svg");
+import env from "env" with { type: "json" };
 
 const App = () => {
+  const { useState, useEffect }: typeof RC = React;
   const {
     Animated,
     Easing,
@@ -57,6 +61,54 @@ const App = () => {
 
   const animation = Animated.loop(spinTiming);
 
+  // https://since1979.dev/respecting-prefers-reduced-motion-with-javascript-and-react/
+  const useReducedMotion: (defaultVal?: true | false) => boolean = (
+    defaultVal = true
+  ) => {
+    // Local state to store the reduced motion setting.
+    const [reducedMotion, setReducedMotion] = useState<boolean>(defaultVal);
+
+    // Callback for media query change events.
+    function queryChangeHandler(event: MediaQueryListEvent | any) {
+      // Set the state to the value of the media query.
+      setReducedMotion(event.target.matches);
+    }
+
+    useEffect(() => {
+      // Grab the reduced motion media query,
+      const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      if (mediaQuery) {
+        // Set the state to the value of the media query.
+        setReducedMotion(mediaQuery.matches);
+
+        // Listen for changes in the media query.
+        mediaQuery.addEventListener("change", queryChangeHandler);
+
+        // Clean up the event listener when the component unmounts.
+        return () =>
+          mediaQuery.removeEventListener("change", queryChangeHandler);
+      }
+      return;
+    }, []);
+
+    return reducedMotion;
+  };
+
+  const fontSize = scale * (10 + vmin(2, viewport));
+
+  // Get the recuded motion state from our hook.
+  const isReducedMotion = useReducedMotion(true);
+
+  const imageInlineSizeLimit = parseInt(
+    env["IMAGE_INLINE_SIZE_LIMIT"] || "10000"
+  );
+
+  const lineHeight = (fontSize: number) => {
+    const multiplier = fontSize > 20 ? 1.5 : 1;
+    return parseInt((fontSize + fontSize * multiplier).toString(), 10);
+  };
+
   const styles = StyleSheet.create<{
     app: ReactNative.ViewStyle;
     header: ReactNative.ViewStyle;
@@ -67,6 +119,7 @@ const App = () => {
   }>({
     app: {
       textAlign: "center",
+      margin: 0,
     },
     header: {
       color: "white",
@@ -89,11 +142,15 @@ const App = () => {
     },
     p: {
       color: "white",
-      fontSize: scale * (10 + vmin(2, viewport)),
+      fontSize: fontSize,
+      textAlign: "center",
+      lineHeight: lineHeight(fontSize),
     },
     link: {
       color: "#61dafb",
-      fontSize: scale * (10 + vmin(2, viewport)),
+      fontSize: fontSize,
+      textAlign: "center",
+      lineHeight: lineHeight(fontSize),
     },
   });
 
@@ -103,12 +160,21 @@ const App = () => {
     >
       <View style={styles.header}>
         <Animated.Image
+          alt="logo"
           style={[
             styles.logo,
             {
+              // display: "block",
               scale: scale,
               width: scale * vmin(40, viewport),
               height: scale * vmin(40, viewport),
+              maxWidth: "100%",
+              WebkitFontSmoothing: "antialiased",
+              overflowClipMargin: "content-box",
+              overflowX: "clip",
+              overflowY: "clip",
+              // lineHeight: "1.5",
+              maxInlineSize: imageInlineSizeLimit,
             },
             { transform: [{ rotate: spin }] },
           ]}
@@ -116,11 +182,34 @@ const App = () => {
           height={595.3}
           source={{ uri: "data:image/svg+xml;base64," + logo }}
           onLoadStart={() => animation.reset()}
-          onLoadEnd={() => animation.start()}
+          onLoadEnd={() => (isReducedMotion ? null : animation.start())}
           onError={() => animation.stop()}
         />
-        <Text style={styles.p}>
-          Edit <Text style={styles.code}>src/App.tsx</Text> and save to reload.
+        <Text
+          style={[
+            styles.p,
+            {
+              WebkitFontSmoothing: "antialiased",
+              tabSize: 4,
+              unicodeBidi: "isolate",
+            },
+          ]}
+        >
+          Edit{" "}
+          <Text
+            style={[
+              styles.code,
+              {
+                WebkitFontSmoothing: "antialiased",
+                tabSize: 4,
+                unicodeBidi: "isolate",
+                // lineHeight: "1.5",
+              },
+            ]}
+          >
+            src/App.tsx
+          </Text>{" "}
+          and save to reload.
         </Text>
         <Text
           style={styles.link}

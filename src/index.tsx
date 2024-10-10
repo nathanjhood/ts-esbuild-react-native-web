@@ -2,12 +2,18 @@ import React = require("react");
 import ReactDOM = require("react-dom/client");
 import reportWebVitals = require("./reportWebVitals");
 import serviceWorkerRegistration = require("./serviceWorkerRegistration");
-
 import App = require("./App");
+
+if (process.env.NODE_ENV === "development") {
+  import("react-error-overlay").then((m) => {
+    m.stopReportingRuntimeErrors();
+  });
+}
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <App />

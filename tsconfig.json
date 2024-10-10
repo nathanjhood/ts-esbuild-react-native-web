@@ -12,7 +12,7 @@
   ],
   "compilerOptions": {
     // from @tsconfig/node20
-    "target": "es2022",
+    "target": "es2023",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     // taken from @tsconfig/strictest
     "strict": true,
@@ -42,14 +42,15 @@
     // recommended
     "verbatimModuleSyntax": true,
     // custom
-    "jsx": "react-jsxdev", // "preserve", // Nativewind requires 'react-jsx'
+    "jsx": "react-jsxdev", // try "react-jsxdev" for development mode, // Nativewind requires 'react-jsx'
     "jsxImportSource": "react", // "nativewind" is coming...
     "composite": true,
     "declaration": true,
     "emitDeclarationOnly": true,
     "skipLibCheck": false,
-    "tsBuildInfoFile": ".cache/.tsbuildinfo",
+    "tsBuildInfoFile": "node_modules/.cache/.tsbuildinfo",
     "paths": {
+      "@/*": ["./src/*"],
       "static/*": ["./public/static/*"]
     }
   },
